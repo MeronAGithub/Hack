@@ -1,111 +1,126 @@
-import { useState } from 'react';
-import { useAuth } from '../contexts/AuthContext';
-import { useNavigate } from 'react-router-dom';
+// import { useState } from "react";
+// import { signUp } from "../auth/signup";
+
+// export default function Signup() {
+//     const [email, setEmail] = useState("")
+//     const [password, setPassword] = useState("")
+
+//     const handleSubmit = async (e) => {
+//         e.preventDefault();
+//         try {
+//             await signUp(email, password);
+//             alert("signed up!")
+//         }
+//         catch (err) {
+//             alert(err.message);
+//         }
+//     }
+
+//     return (
+//         <>
+//             <form onSubmit={handleSubmit}>
+//                 <input type="email" onChange={(e) => setEmail(e.target.value)}></input>
+//                 <input type="password" onChange={(e) => setPassword(e.target.value)}></input>
+//                 <button type="submit">Sign up</button>
+//             </form>
+//         </>
+//     )
+// } 
+
+
+import { useState } from "react";
+import { signUp } from "../auth/signup";
+import { Link } from "react-router-dom";
+import "../styles/auth.css";
 
 export default function Signup() {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [passwordConfirm, setPasswordConfirm] = useState('');
-    const [error, setError] = useState('');
-    const [loading, setLoading] = useState(false);
-    const { signup } = useAuth();
-    const navigate = useNavigate();
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState("");
 
-    async function handleSubmit(e) {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (password !== passwordConfirm) {
-            return setError('Passwords do not match');
+        if (password !== confirmPassword) {
+            setError("Passwords do not match");
+            return;
         }
+
+        setIsLoading(true);
+        setError("");
 
         try {
-            setError('');
-            setLoading(true);
-            await signup(email, password);
-            navigate('/');
+            await signUp(email, password);
+            // Redirect would happen in the signUp function or here
         } catch (err) {
-            setError('Failed to create an account');
-            console.error(err);
+            setError(err.message || "Failed to sign up. Please try again.");
+        } finally {
+            setIsLoading(false);
         }
-        setLoading(false);
-    }
+    };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-            <div className="max-w-md w-full space-y-8">
-                <div>
-                    <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-                        Create your account
-                    </h2>
+        <div className="auth-container">
+            <div className="auth-card">
+                <div className="auth-header">
+                    <h1>Create Account</h1>
+                    <p>Sign up to get started</p>
                 </div>
-                {error && (
-                    <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-                        <span className="block sm:inline">{error}</span>
-                    </div>
-                )}
-                <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-                    <div className="rounded-md shadow-sm -space-y-px">
-                        <div>
-                            <label htmlFor="email-address" className="sr-only">
-                                Email address
-                            </label>
-                            <input
-                                id="email-address"
-                                name="email"
-                                type="email"
-                                autoComplete="email"
-                                required
-                                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                                placeholder="Email address"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                            />
-                        </div>
-                        <div>
-                            <label htmlFor="password" className="sr-only">
-                                Password
-                            </label>
-                            <input
-                                id="password"
-                                name="password"
-                                type="password"
-                                autoComplete="new-password"
-                                required
-                                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                                placeholder="Password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                            />
-                        </div>
-                        <div>
-                            <label htmlFor="password-confirm" className="sr-only">
-                                Confirm Password
-                            </label>
-                            <input
-                                id="password-confirm"
-                                name="password-confirm"
-                                type="password"
-                                autoComplete="new-password"
-                                required
-                                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                                placeholder="Confirm Password"
-                                value={passwordConfirm}
-                                onChange={(e) => setPasswordConfirm(e.target.value)}
-                            />
-                        </div>
+
+                {error && <div className="auth-error">{error}</div>}
+
+                <form onSubmit={handleSubmit} className="auth-form">
+                    <div className="form-group">
+                        <label htmlFor="email">Email Address</label>
+                        <input
+                            id="email"
+                            type="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            placeholder="Enter your email"
+                            required
+                        />
                     </div>
 
-                    <div>
-                        <button
-                            type="submit"
-                            disabled={loading}
-                            className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                        >
-                            {loading ? 'Creating account...' : 'Sign up'}
-                        </button>
+                    <div className="form-group">
+                        <label htmlFor="password">Password</label>
+                        <input
+                            id="password"
+                            type="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            placeholder="Create a password"
+                            required
+                        />
                     </div>
+
+                    <div className="form-group">
+                        <label htmlFor="confirmPassword">Confirm Password</label>
+                        <input
+                            id="confirmPassword"
+                            type="password"
+                            value={confirmPassword}
+                            onChange={(e) => setConfirmPassword(e.target.value)}
+                            placeholder="Confirm your password"
+                            required
+                        />
+                    </div>
+
+                    <button
+                        type="submit"
+                        className="auth-button"
+                        disabled={isLoading}
+                    >
+                        {isLoading ? "Creating account..." : "Sign Up"}
+                    </button>
                 </form>
+
+                <div className="auth-footer">
+                    Already have an account? <Link to="/login">Log in</Link>
+                </div>
             </div>
         </div>
     );
-} 
+}
