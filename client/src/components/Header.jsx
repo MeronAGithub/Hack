@@ -44,7 +44,7 @@ const Header = () => {
             <div className="header-container">
                 <Link to="/" className="header-logo">
                     <img src={logo} alt="Logo" className="logo-image" />
-                    <div className="logo-text">Scholar<span>Ship</span></div>
+                    <div className="logo-text">Biz<span>Lingo</span></div>
                 </Link>
 
                 <button className="mobile-menu-toggle" onClick={toggleMenu} aria-label="Toggle menu">
