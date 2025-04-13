@@ -3,37 +3,15 @@ import { getAuth } from 'firebase/auth';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyAcnOFJq2--JAXFo9XZ8SRugmAqt0jy4CE",
-    authDomain: "bizlingo-7d79e.firebaseapp.com",
-    projectId: "bizlingo-7d79e",
-    storageBucket: "bizlingo-7d79e.firebasestorage.app",
-    messagingSenderId: "460507432174",
-    appId: "1:460507432174:web:0e782c183e508a0bf25fff",
-    measurementId: "G-HHEQCPEDC8"
+    apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+    authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+    projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+    storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+    appId: import.meta.env.VITE_FIREBASE_APP_ID,
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export default app;
-
-
-// import { getAnalytics } from "firebase/analytics";
-// // TODO: Add SDKs for Firebase products that you want to use
-// // https://firebase.google.com/docs/web/setup#available-libraries
-
-// // Your web app's Firebase configuration
-// // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-// const firebaseConfig = {
-//     apiKey: "AIzaSyAcnOFJq2--JAXFo9XZ8SRugmAqt0jy4CE",
-//     authDomain: "bizlingo-7d79e.firebaseapp.com",
-//     projectId: "bizlingo-7d79e",
-//     storageBucket: "bizlingo-7d79e.firebasestorage.app",
-//     messagingSenderId: "460507432174",
-//     appId: "1:460507432174:web:0e782c183e508a0bf25fff",
-//     measurementId: "G-HHEQCPEDC8"
-// };
-
-// // Initialize Firebase
-// const app = initializeApp(firebaseConfig);
-// const analytics = getAnalytics(app);
