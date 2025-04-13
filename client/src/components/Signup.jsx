@@ -32,8 +32,10 @@ import { useState } from "react";
 import { signUp } from "../auth/signup";
 import { Link } from "react-router-dom";
 import "../styles/auth.css";
+import { useNavigate } from "react-router-dom";
 
 export default function Signup() {
+    const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
@@ -53,7 +55,7 @@ export default function Signup() {
 
         try {
             await signUp(email, password);
-            // Redirect would happen in the signUp function or here
+            navigate("/dashboard"); // 👈 Redirect to dashboard
         } catch (err) {
             setError(err.message || "Failed to sign up. Please try again.");
         } finally {
