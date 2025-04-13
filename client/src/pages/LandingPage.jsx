@@ -42,10 +42,10 @@ const LandingPage = () => {
                 <div className="landing-content">
                     <div className="landing-tagline">Financial literacy gamified</div>
                     <h1 className="landing-title">
-                        Lorem Ipsum Sit<span className="title-highlight">Amet</span> Dolor Ipsum
+                        Make Finanical <span className="title-highlight">Decisions</span> With Confidence
                     </h1>
                     <p className="landing-description">
-                        Lorem ipsum sit amet dolor, lore ipsum sit
+                        Learn to maneuver your expenses
                     </p>
                     <div className="landing-cta">
                         <Link to="/contact">
