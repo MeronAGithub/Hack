@@ -29,8 +29,10 @@ import { useState } from "react";
 import { login } from "../auth/login";
 import { Link } from "react-router-dom";
 import "../styles/auth.css";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
+    const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [isLoading, setIsLoading] = useState(false);
@@ -43,7 +45,7 @@ export default function Login() {
 
         try {
             await login(email, password);
-            // Redirect would happen in the login function or here
+            navigate("/dashboard"); // 👈 Redirect after successful login
         } catch (err) {
             setError(err.message || "Failed to log in. Please try again.");
         } finally {
